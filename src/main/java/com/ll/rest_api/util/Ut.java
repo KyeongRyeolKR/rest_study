@@ -17,9 +17,9 @@ public class Ut {
             }
         }
 
-        public static Map<String, Object> toMap(String jsonStr) {
+        public static String toStr(Object obj) {
             try {
-                return new ObjectMapper().readValue(jsonStr, LinkedHashMap.class);
+                return new ObjectMapper().writeValueAsString(obj);
             } catch (JsonProcessingException e) {
                 return null;
             }
