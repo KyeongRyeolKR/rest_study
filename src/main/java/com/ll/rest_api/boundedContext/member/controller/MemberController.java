@@ -42,8 +42,6 @@ public class MemberController {
     public RsData<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
         String accessToken = memberService.genAccessToken(loginRequest.getUsername(), loginRequest.getPassword());
 
-        resp.addHeader("Authentication", accessToken);
-
         return RsData.of(
                 "S-1",
                 "엑세스 토큰이 생성되었습니다.",
