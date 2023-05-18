@@ -34,6 +34,10 @@ public class Member extends BaseEntity {
     // 현재 회원이 가지고 있는 권한들을 List<GrantedAuthority> 형태로 리턴
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
+
+        if (getUsername().equals("admin"))
+            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+
         authorities.add(new SimpleGrantedAuthority("MEMBER"));
 
         return authorities;
