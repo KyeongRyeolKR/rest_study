@@ -25,17 +25,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test")
-class MemberControllerTest {
+class ApiV1MemberControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @Test
-    @DisplayName("POST /member/login 은 로그인 처리 URL 이다.")
+    @DisplayName("POST api/v1/member/login 은 로그인 처리 URL 이다.")
     void t1() throws Exception {
         // When
         ResultActions resultActions = mvc
                 .perform(
-                        post("/member/login")
+                        post("/api/v1/member/login")
                                 .content("""
                                         {
                                             "username": "user1",
