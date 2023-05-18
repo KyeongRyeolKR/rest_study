@@ -116,4 +116,32 @@ class ApiV1ArticlesControllerTest {
                 .andExpect(jsonPath("$.data.article.subject").value("제목 4 !!!"))
                 .andExpect(jsonPath("$.data.article.content").value("내용 4 !!!"));
     }
+
+
+    @Test
+    @DisplayName("PATCH /articles/4 partly")
+    @WithUserDetails("user1")
+    void t5() throws Exception {
+        // When
+        ResultActions resultActions = mvc
+                .perform(
+                        patch("/api/v1/articles/4")
+                                .content("""
+                                        {
+                                            "subject": "제목 4 !!!"
+                                        }
+                                        """)
+                                .contentType(new MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8))
+                )
+                .andDo(print());
+
+        // Then
+        resultActions
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.resultCode").value("S-1"))
+                .andExpect(jsonPath("$.msg").exists())
+                .andExpect(jsonPath("$.data.article.id").value(4))
+                .andExpect(jsonPath("$.data.article.subject").value("제목 4 !!!"))
+                .andExpect(jsonPath("$.data.article.content").value("내용 4"));
+    }
 }
