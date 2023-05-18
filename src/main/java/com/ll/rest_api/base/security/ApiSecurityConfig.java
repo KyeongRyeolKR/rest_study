@@ -14,11 +14,17 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class ApiSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .securityMatcher("/api/**")
+                .authorizeHttpRequests(
+                        authorizeHttpRequests -> authorizeHttpRequests
+                                .requestMatchers("/api/*/member/login").permitAll()  // 로그인은 누구나 가능
+                                .anyRequest().authenticated()  // 나머지는 로그인이 되어있어야 함
+                )
                 .cors().disable() // 타 도메인에서 API 호출 가능
                 .csrf().disable() // CSRF 토큰 끄기
                 .httpBasic().disable() // httpBaic 로그인 방식 끄기

@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.util.MimeTypeUtils.ALL_VALUE;
@@ -53,8 +55,8 @@ public class ApiV1MemberController {
     }
 
     @GetMapping(value = "/me", consumes = ALL_VALUE)
-    public RsData<MeResponse> me() {
-        Member member = memberService.findByUsername("user1").get();
+    public RsData<MeResponse> me(@AuthenticationPrincipal User user) {
+        Member member = memberService.findByUsername(user.getUsername()).get();
 
         return RsData.of(
                 "S-1",
