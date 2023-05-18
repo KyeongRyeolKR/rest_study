@@ -9,17 +9,17 @@ import java.util.Map;
 public class Ut {
     public static class json {
 
-        public static Object toStr(Map<String, Object> map) {
+        public static String toStr(Object obj) {
             try {
-                return new ObjectMapper().writeValueAsString(map);
+                return new ObjectMapper().writeValueAsString(obj);
             } catch (JsonProcessingException e) {
                 return null;
             }
         }
 
-        public static String toStr(Object obj) {
+        public static Map<String, Object> toMap(String jsonStr) {
             try {
-                return new ObjectMapper().writeValueAsString(obj);
+                return new ObjectMapper().readValue(jsonStr, LinkedHashMap.class);
             } catch (JsonProcessingException e) {
                 return null;
             }
