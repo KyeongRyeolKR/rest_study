@@ -23,7 +23,7 @@ public class ApiSecurityConfig {
     private final ApiAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .securityMatcher("/api/**")
                 .exceptionHandling(exceptionHandling -> exceptionHandling
