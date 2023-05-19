@@ -142,4 +142,25 @@ public class ApiV1ArticlesController {
                 new ModifyResponse(modifyRs.getData())
         );
     }
+    @DeleteMapping(value = "/{id}")
+    @Operation(summary = "삭제", security = @SecurityRequirement(name = "bearerAuth"))
+    public RsData delete(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long id
+    ) {
+        Member member = memberService.findByUsername(user.getUsername()).orElseThrow();
+
+        Optional<Article> opArticle = articleService.findById(id);
+
+        if (opArticle.isEmpty()) return RsData.of(
+                "F-1",
+                "%d번 게시물은 존재하지 않습니다.".formatted(id)
+        );
+
+        RsData canDeleteRs = articleService.canDelete(member, opArticle.get());
+
+        if (canDeleteRs.isFail()) return canDeleteRs;
+
+        return articleService.delete(opArticle.get());
+    }
 }

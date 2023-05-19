@@ -144,4 +144,32 @@ class ApiV1ArticlesControllerTest {
                 .andExpect(jsonPath("$.data.article.subject").value("제목 4 !!!"))
                 .andExpect(jsonPath("$.data.article.content").value("내용 4"));
     }
+
+    @Test
+    @DisplayName("DELETE /articles/4")
+    @WithUserDetails("user1")
+    void t6() throws Exception {
+        // When
+        ResultActions resultActions1 = mvc
+                .perform(
+                        delete("/api/v1/articles/4")
+                )
+                .andDo(print());
+
+        ResultActions resultActions2 = mvc
+                .perform(
+                        delete("/api/v1/articles/4")
+                )
+                .andDo(print());
+
+        // Then
+        resultActions1
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.resultCode").value("S-1"))
+                .andExpect(jsonPath("$.msg").exists());
+
+        resultActions2
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.resultCode").value("F-1"));
+    }
 }

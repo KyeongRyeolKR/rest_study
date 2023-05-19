@@ -40,8 +40,14 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
-    public void delete(Article article) {
+    public RsData delete(Article article) {
         articleRepository.delete(article);
+
+        return RsData.of(
+                "S-1",
+                "%d번 게시글이 삭제되었습니다.".formatted(article.getId()),
+                null
+        );
     }
 
     public RsData canDelete(Member actor, Article article) {

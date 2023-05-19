@@ -5,8 +5,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://127.0.0.1:3306/rest_api__2023_05_17___dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-    username: root
-    password:
+    username: kkr0250
+    password: ${DB_PW}
   jpa:
     hibernate:
       ddl-auto: create
